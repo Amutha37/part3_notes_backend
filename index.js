@@ -3,6 +3,16 @@ const app = express();
 //  jason-parser to access data to dd new notes in the request body in JSON format.
 app.use(express.json());
 
+const requestLogger = (request, response, next) => {
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
+};
+
+app.use(requestLogger);
+
 let notes = [
   {
     id: 1,
@@ -55,7 +65,7 @@ app.post("/api/notes", (request, response) => {
 
   notes = notes.concat(note);
   console.log(notes);
-  response.json(note);
+  response.json(notes);
 });
 
 // check for individual id to load from the url to code to filter
@@ -78,7 +88,13 @@ app.delete("/api/notes/:id", (request, response) => {
   response.status(204).end();
 });
 
-const PORT = 3001;
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint);
+
+const PORT = 3002;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
