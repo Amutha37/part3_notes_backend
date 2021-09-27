@@ -1,11 +1,12 @@
-GET  http://localhost:3002/api/notes
+# GET  http://localhost:3002/api/notes
 
 
-# POST  http://localhost:3001/api/notes
-# content-type: application/json
+POST  http://localhost:3002/api/notes
+content-type: application/json
 
-# {
-#     "name": "VS Code REST client is pretty good",
-#     "time": "Wed, 21 Oct 2015 18:27:50 GMT",
-#     "important": false
-# }
+{
+    "id" : 4,
+    "name": "VS Code REST client is pretty good",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT",
+    "important": false
+}
