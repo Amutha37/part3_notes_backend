@@ -42,12 +42,13 @@ Install node express and nodemon.
 
 .Use parameter id from route to pass to application to find the data.
 .Implement error status code 404 for data not found
-`http://localhost:3001/api/notes/2`
+
 
 ### part3_nodejs-4
 
 .Delete data using id
 .Install' plugin VS code REST Client for on board API data view.
+
 .Run server Request in REST Clent editor `Get http://localhost:3001/api/notes/2`
 
 ### part3_nodejs-5
