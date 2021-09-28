@@ -58,3 +58,24 @@ Install node express and nodemon.
 .Retrive data from body property of the request object.
 
 .Create hard code data object to add new note.
+
+
+
+.Heroku app
+
+![Screen Shot 2021-09-29 at 9 38 19 am](https://user-images.githubusercontent.com/67087939/135179688-418d6de5-57e4-494f-96ea-1323bd4491a7.png)
+
+.Heroku express api/notes
+
+![Screen Shot 2021-09-29 at 9 40 18 am](https://user-images.githubusercontent.com/67087939/135179832-abc61a32-c748-422d-a88d-3f5071bfbdfb.png)
+
+.Heroku express frontend build and backend
+
+![Screen Shot 2021-09-29 at 9 42 25 am](https://user-images.githubusercontent.com/67087939/135179969-db4f5d80-3379-4a0c-a0f2-6b8a6e259528.png)
+
+.Front end proxy to backend localhost:3001/api/notes
+
+
+![Screen Shot 2021-09-29 at 9 41 58 am](https://user-images.githubusercontent.com/67087939/135179934-c1f9a573-8827-4ada-ad86-7b8cedb1fe6e.png)
+
+
