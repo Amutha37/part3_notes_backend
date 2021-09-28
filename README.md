@@ -20,34 +20,22 @@ Create file header content-type: 'Content-Type': 'application/json' print hardco
 
 ### part3_nodejs-2
 
-Install node express and nodemon.
+\*Install node express and nodemon.
 
-> npm install express
-> npm install --save-dev nodemon
-> {
-> // ..
-> "scripts": {
+\*npm install express npm install --save-dev nodemon
 
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-
-},
-// ..
-}
-
-> npm run dev
+\*npm run dev
 
 ### part3_nodejs-3
 
 .Use parameter id from route to pass to application to find the data.
 .Implement error status code 404 for data not found
-`http://localhost:3001/api/notes/2`
 
 ### part3_nodejs-4
 
 .Delete data using id
 .Install' plugin VS code REST Client for on board API data view.
+
 .Run server Request in REST Clent editor `Get http://localhost:3001/api/notes/2`
 
 ### part3_nodejs-5
