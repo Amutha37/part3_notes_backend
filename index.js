@@ -1,12 +1,15 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 //  jason-parser to access data to dd new notes in the request body in JSON format.
 app.use(express.json());
+app.use(express.static("build"));
+app.use(cors());
 
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
   console.log("Path:  ", request.path);
-  console.log("Header:  ", request.headers);
+  // console.log("Header:  ", request.headers);
   console.log("Body:  ", request.body);
   console.log("---");
   next();
