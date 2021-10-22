@@ -15,27 +15,6 @@ mongoose.connect(url);
 
 // GENERATE NEW NOTE DATA IN mongoDB database
 
-// const noteSchema = new mongoose.Schema({
-//   content: String,
-//   date: Date,
-//   important: Boolean,
-// });
-
-// const Note = mongoose.model("Note", noteSchema);
-
-// const note = new Note({
-//   content: "MongoDB made it easy with data collections.",
-//   date: new Date(),
-//   important: true,
-// });
-
-// note.save().then((result) => {
-//   console.log("note saved!");
-//   mongoose.connection.close();
-// });
-
-// Fetching objects from the database mongoDB
-
 const noteSchema = new mongoose.Schema({
   content: String,
   date: Date,
@@ -43,6 +22,19 @@ const noteSchema = new mongoose.Schema({
 });
 
 const Note = mongoose.model("Note", noteSchema);
+
+const note = new Note({
+  content: "MongoDB made it easy with data collections.",
+  date: new Date(),
+  important: true,
+});
+
+note.save().then((result) => {
+  console.log("note saved!");
+  mongoose.connection.close();
+});
+
+// Fetching objects from the database mongoDB
 
 Note.find({}).then((result) => {
   result.forEach((note) => {
