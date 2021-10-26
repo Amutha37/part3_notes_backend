@@ -36,6 +36,16 @@ app.use(requestLogger);
 //     console.log("error connecting to MongoDB:", error.message);
 //   });
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+
 // let notes = [
 //   {
 //     id: 1,
@@ -113,9 +123,19 @@ app.post("/api/notes", (request, response) => {
 // check for individual id to load from the url to code to filter
 app.get("/api/notes/:id", (request, response) => {
   // with mongoDB
-  Note.findById(request.params.id).then((note) => {
-    response.json(note);
-  });
+  Note.findById(request.params.id)
+    .then((note) => {
+      if (note) {
+        response.json(note);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
+  // .catch((error) => {
+  //   console.log(error);
+  //   response.status(400).end({ error: "malformatted id" });
+  // });
 
   // before mongoDB
   // const id = Number(request.params.id);
@@ -127,13 +147,34 @@ app.get("/api/notes/:id", (request, response) => {
   //   response.status(404).end();
   // }
 });
+// update database
+app.put("/api/notes/:id", (request, response, next) => {
+  const body = request.body;
+
+  const note = {
+    content: body.content,
+    important: body.important,
+  };
+
+  Note.findByIdAndUpdate(request.params.id, note, { new: true })
+    .then((updatedNote) => {
+      response.json(updatedNote);
+    })
+    .catch((error) => next(error));
+});
 
 // deleting data
 app.delete("/api/notes/:id", (request, response) => {
-  const id = Number(request.params.id);
-  notes = notes.filter((note) => note.id !== id);
+  Note.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 
-  response.status(204).end();
+  //   const id = Number(request.params.id);
+  //   notes = notes.filter((note) => note.id !== id);
+
+  //   response.status(204).end();
 });
 
 const unknownEndpoint = (request, response) => {
@@ -141,6 +182,7 @@ const unknownEndpoint = (request, response) => {
 };
 
 app.use(unknownEndpoint);
+app.use(errorHandler);
 // before mongo env
 // const PORT = process.env.PORT || 3001;
 
