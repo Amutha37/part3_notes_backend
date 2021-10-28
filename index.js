@@ -41,6 +41,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "validationError") {
+    return response.status(400).json({ error: error.message });
   }
 
   next(error);
@@ -84,7 +86,7 @@ app.get("/api/notes", (request, response) => {
 //   return maxId + 1;
 // };
 
-app.post("/api/notes", (request, response) => {
+app.post("/api/notes", (request, response, next) => {
   const body = request.body;
   // with mongoDB
   if (body.content === undefined) {
@@ -97,9 +99,17 @@ app.post("/api/notes", (request, response) => {
     date: new Date(),
   });
 
-  note.save().then((savedNote) => {
-    response.json(savedNote);
-  });
+  note
+    .save()
+    .then(
+      (savedNote) => savedNote.toJSON()
+      // response.json(savedNote.toJSON());
+      // clearner way with single line statement
+    )
+    .then((savedAndFormatedNote) => {
+      response.json(savedAndFormatedNote);
+    })
+    .catch((error) => next(error));
 
   // before mongoDB
   // if (!body.content) {
