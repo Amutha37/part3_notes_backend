@@ -76,3 +76,18 @@ Install node express and nodemon.
 
 - heroku app for beckend
   `https://afternoon-plateau-39207.herokuapp.com/`
+
+
+- Create new production build on the frontend and make a copy to backend. 
+
+- push the changes to heroku
+>`git push heroku main`
+
+* To run heroku with mongoDB
+>  `heroku config:set MONGODB_URI=mongodb+srv://fullstack_amutha:(secretpassword)@cluster0.eqxje.mongodb.net/note-app?retryWrites=true&w=majority`
+
+If it causes error. set apostrophes for the MONGODB_URI's value.
+
+- view the database in heroku 
+`https://afternoon-plateau-39207.herokuapp.com/`
+

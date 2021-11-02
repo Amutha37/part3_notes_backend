@@ -1,6 +1,7 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
+
+const app = express();
 // mongoDB atlas
 // BEFORE models folder
 // const mongoose = require("mongoose");
@@ -9,7 +10,14 @@ const Note = require("./models/note");
 
 //  jason-parser to access data to dd new notes in the request body in JSON format.
 app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
 app.use(express.static("build"));
+
 app.use(cors());
 
 const requestLogger = (request, response, next) => {
@@ -23,60 +31,17 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
-// const url = process.env.MONGODB_URI;
-// const url = `mongodb+srv://fullstack_amutha:fullstackamutha@cluster0.eqxje.mongodb.net/note-app?retryWrites=true&w=majority`;
-// console.log("connecting to", url);
-
-// mongoose
-//   .connect(url)
-//   .then((result) => {
-//     console.log("connected to MongoDB");
-//   })
-//   .catch((error) => {
-//     console.log("error connecting to MongoDB:", error.message);
-//   });
-
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message);
-
-  if (error.name === "CastError") {
-    return response.status(400).send({ error: "malformatted id" });
-  } else if (error.name === "validationError") {
-    return response.status(400).json({ error: error.message });
-  }
-
-  next(error);
-};
-
-// let notes = [
-//   {
-//     id: 1,
-//     content: "HTML is easy",
-//     date: "2019-05-30T17:30:31.098Z",
-//     important: true,
-//   },
-//   {
-//     id: 2,
-//     content: "Browser can execute only Javascript",
-//     date: "2019-05-30T18:39:34.091Z",
-//     important: false,
-//   },
-//   {
-//     id: 3,
-//     content: "GET and POST are the most important methods of HTTP protocol",
-//     date: "2019-05-30T19:20:14.298Z",
-//     important: true,
-//   },
-// ];
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
 // fetch notes from mongoDB
 
 app.get("/api/notes", (request, response) => {
-  Note.find({}).then((notes) => {
-    response.json(notes);
-  });
+  Note.find({})
+    .then((notes) => {
+      response.json(notes);
+    })
+    .catch((error) => next(error));
 });
 
 // add new data
@@ -98,36 +63,15 @@ app.post("/api/notes", (request, response, next) => {
     important: body.important || false,
     date: new Date(),
   });
-
+  // response.json(savedNote.toJSON());
+  // clearner way with single line statement
   note
     .save()
-    .then(
-      (savedNote) => savedNote.toJSON()
-      // response.json(savedNote.toJSON());
-      // clearner way with single line statement
-    )
+    .then((savedNote) => savedNote.toJSON())
     .then((savedAndFormatedNote) => {
       response.json(savedAndFormatedNote);
     })
     .catch((error) => next(error));
-
-  // before mongoDB
-  // if (!body.content) {
-  //   return response.status(400).json({
-  //     error: "content missing",
-  //   });
-  // }
-
-  // const note = {
-  //   content: body.content,
-  //   important: body.important || false,
-  //   date: new Date(),
-  //   id: generateId(),
-  // };
-
-  // notes = notes.concat(note);
-  // console.log(notes);
-  // response.json(notes);
 });
 
 // check for individual id to load from the url to code to filter
@@ -148,14 +92,6 @@ app.get("/api/notes/:id", (request, response) => {
   // });
 
   // before mongoDB
-  // const id = Number(request.params.id);
-  // const note = notes.find((note) => note.id === id);
-
-  // if (note) {
-  //   response.json(note);
-  // } else {
-  //   response.status(404).end();
-  // }
 });
 // update database
 app.put("/api/notes/:id", (request, response, next) => {
@@ -192,6 +128,18 @@ const unknownEndpoint = (request, response) => {
 };
 
 app.use(unknownEndpoint);
+
+const errorHandler = (error, request, response, next) => {
+  // console.error(error.message);
+
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "validationError") {
+    return response.status(400).json({ error: req.message });
+  }
+
+  next(error);
+};
 app.use(errorHandler);
 // before mongo env
 // const PORT = process.env.PORT || 3001;
