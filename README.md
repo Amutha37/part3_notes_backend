@@ -97,11 +97,13 @@ Part 4
 * Establish file structure for separate responsibilities of the application into separate module
 
 File structure of this backend project before separating the app into different modules : -
-![Screen Shot 2021-11-04 at 2 08 53 pm](https://user-images.githubusercontent.com/67087939/140251428-79cd2d63-39b8-4b71-988f-892fc279996c.png)
+![Screen Shot 2021-11-04 at 2 13 46 pm](https://user-images.githubusercontent.com/67087939/140251907-a09f6885-747d-4b5b-a2d2-9995559c1c0a.png)
+
 
 File structure of this backend project after separating the app into different modules : -
+![Screen Shot 2021-11-04 at 2 13 06 pm](https://user-images.githubusercontent.com/67087939/140251849-0fddbb3f-98b7-4952-8684-22a8703d8af6.png)
 
-![Screen Shot 2021-11-04 at 2 10 00 pm](https://user-images.githubusercontent.com/67087939/140251562-9558815d-4e26-4af7-8f3e-a7dc5e67e940.png)
+
 
 
 
