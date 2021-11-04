@@ -91,3 +91,17 @@ If it causes error. set apostrophes for the MONGODB_URI's value.
 - view the database in heroku 
 `https://afternoon-plateau-39207.herokuapp.com/`
 
+
+Part 4 
+
+* Establish file structure for separate responsibilities of the application into separate module
+
+File structure of this backend project before separating the app into different modules : -
+![Screen Shot 2021-11-04 at 2 08 53 pm](https://user-images.githubusercontent.com/67087939/140251428-79cd2d63-39b8-4b71-988f-892fc279996c.png)
+
+File structure of this backend project after separating the app into different modules : -
+
+![Screen Shot 2021-11-04 at 2 10 00 pm](https://user-images.githubusercontent.com/67087939/140251562-9558815d-4e26-4af7-8f3e-a7dc5e67e940.png)
+
+
+
