@@ -26,6 +26,4 @@ app.use('/api/notes', notesRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
-logger.info(`Server running on port ${config.PORT}`)
-
 module.exports = app
