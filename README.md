@@ -104,6 +104,21 @@ File structure of this backend project after separating the app into different m
 ![Screen Shot 2021-11-04 at 2 13 06 pm](https://user-images.githubusercontent.com/67087939/140251849-0fddbb3f-98b7-4952-8684-22a8703d8af6.png)
 
 
+### Testing Node applications
+
+> `npm install --save-dev jest`
+
+Edit npm npm scripts test : -
+ Execute tests with Jest and to report about the test execution with the verbose style:
+
+ "test": "jest --verbose"
+
+Jest requires one to specify that the execution environment is Node. This can be done by adding the following to the end of package.json:
+
+ "jest": {
+   "testEnvironment": "node"
+ }
+
 
 
 
