@@ -21,7 +21,7 @@ notesRouter.get('/:id', (request, response, next) => {
 })
 
 //  add or POST  new notes
-notesRouter.post('/', (request, response, next) => {
+notesRouter.post('/', async (request, response, next) => {
   const body = request.body
   // with mongoDB
   if (body.content === undefined) {
@@ -33,16 +33,16 @@ notesRouter.post('/', (request, response, next) => {
     important: body.important || false,
     date: new Date(),
   })
-  note
-    .save()
-    .then((savedNote) => {
-      response.json(savedNote)
-    })
-    //   .then((savedNote) => savedNote.toJSON())
-    //   .then((savedAndFormatedNote) => {
-    //     response.json(savedAndFormatedNote)
-    //   })
-    .catch((error) => next(error))
+  try {
+    const savedNote = await note.save()
+    response.json(savedNote)
+  } catch (exception) {
+    next(exception)
+  }
+  //   //   .then((savedNote) => savedNote.toJSON())
+  //   //   .then((savedAndFormatedNote) => {
+  //   //     response.json(savedAndFormatedNote)
+  //   //   })
 })
 
 // update database
