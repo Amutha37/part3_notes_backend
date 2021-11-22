@@ -11,19 +11,25 @@ beforeEach(async () => {
 
   console.log('cleared')
   // new way optimising
-  helper.initialNotes.forEach(async (note) => {
+  // // this new way cause problem due to the test starts before intiliaze complete because the await is inside another function
+  // helper.initialNotes.forEach(async (note) => {
+  //   let noteObject = new Note(note)
+  //   await noteObject.save()
+  //   console.log('saved')
+  // })
+  // Promise.all will solve the above problem
+  // the solution is advance but this execute the promisses it receives in parallel.
+  // const noteObjects = helper.initialNotes.map((note) => new Note(note))
+  // const promiseArray = noteObjects.map((note) => note.save())
+  // await Promise.all(promiseArray)
+
+  // This will be execute in specific order
+  for (let note of helper.initialNotes) {
     let noteObject = new Note(note)
     await noteObject.save()
-    console.log('saved')
-  })
+  }
+  // await Promise.all(promiseArray)
   console.log('done')
-
-  // old way
-  // let noteObject = new Note(helper.initialNotes[0])
-  // await noteObject.save()
-
-  // noteObject = new Note(helper.initialNotes[1])
-  // await noteObject.save()
 }, 100000)
 
 // test
