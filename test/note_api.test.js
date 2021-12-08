@@ -11,12 +11,10 @@ beforeEach(async () => {
 
   console.log('cleared')
   // new way optimising
-  helper.initialNotes.forEach(async (note) => {
-    let noteObject = new Note(note)
-    await noteObject.save()
-    console.log('saved')
-  })
-  console.log('done')
+  // helper.initialNotes.forEach(async (note) => {
+  //   let noteObject = new Note(note)
+  //   await noteObject.save()
+  // })
 
   // old way
   // let noteObject = new Note(helper.initialNotes[0])
@@ -24,6 +22,15 @@ beforeEach(async () => {
 
   // noteObject = new Note(helper.initialNotes[1])
   // await noteObject.save()
+
+  // another way
+  // await Note.insertMany(helper.initialNotes)
+
+  //Another way with promise all
+  const noteObjects = helper.initialNotes.map((note) => new Note(note))
+  const promiseArray = noteObjects.map((note) => note.save())
+  await Promise.all(promiseArray)
+  console.log('done')
 }, 100000)
 
 // test
@@ -43,7 +50,7 @@ describe('all notes', () => {
 
     expect(response.body).toHaveLength(helper.initialNotes.length)
   })
-})
+}, 200000)
 
 describe('first notes', () => {
   test('the first note is about HTTP methods', async () => {
@@ -60,7 +67,7 @@ describe('search for data', () => {
     const contents = response.body.map((r) => r.content)
     expect(contents).toContain('Browser can execute only Javascript')
   })
-})
+}, 100000)
 
 // test operation for each route of the API
 // 1. add new obj
@@ -97,10 +104,11 @@ describe('no content test', () => {
 
     expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
   })
-})
+}, 100000)
 // retrive one note
-describe('deleting individual note', () => {
-  test('a specific note can be viewed', async () => {
+describe('view specific note', () => {
+  test('successfully viewed specific note', async () => {
+    // const response = await api.get('/api/notes')
     const notesAtStart = await helper.notesInDb()
 
     const noteToView = notesAtStart[0]
@@ -114,7 +122,7 @@ describe('deleting individual note', () => {
 
     expect(resultNote.body).toEqual(processedNoteToView)
   })
-})
+}, 100000)
 // test for removing individual note
 describe('deleting individual note', () => {
   test('a note can be deleted', async () => {
