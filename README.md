@@ -115,6 +115,49 @@ Jest requires one to specify that the execution environment is Node. This can be
 "testEnvironment": "node"
 }
 
+- Using `integration testing` where there are multiple components of the system being tested.
+
+1. Define the execution mode of the application with the NODE_ENV environment variable
+
+{
+// ...
+"scripts": {
+"start": "NODE_ENV=production node index.js",
+"dev": "NODE_ENV=development nodemon index.js",
+"build:ui": "rm -rf build && cd ../../../2/luento/notes && npm run build && cp -r build ../../../3/luento/notes-backend",
+"deploy": "git push heroku master",
+"deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
+"logs:prod": "heroku logs --tail",
+"lint": "eslint .",
+"test": "NODE_ENV=test jest --verbose --runInBand"
+},
+// ...
+}
+
+There is a slight issue in the way that we have specified the mode of the application in our scripts: it will not work on Windows. We can correct this by installing the cross-env package as a development dependency with the command:
+
+> `npm install --save-dev cross-env`
+
+- Edit config.js and .env file
+
+const MONGODB_URI = process.env.NODE_ENV === 'test'
+? process.env.TEST_MONGODB_URI
+: process.env.MONGODB_URI
+
+TEST_MONGODB_URI=" "
+
+### Supertest
+
+Install supertest package to help us write our tests for testing the API.
+
+Install the package as a development dependency:
+
+> `npm install --save-dev supertest`
+
+Import supertest in test file.
+
+const supertest = require('supertest')
+
 ### To run individual test file : -
 
 run test file :
@@ -143,3 +186,33 @@ Import the library in `app.js`
 1. The 'magic' of the library allows us to eliminate the try-catch blocks completely.
 2. The library handles everything under the hood.
 3. If an exception(error) occurs in a async route, the execution is automatically passed to the error handling middleware.
+
+### Optimizing the beforeEach function
+
+Using `promise.all`
+
+1. Promise.all executes the promises it receives in parallel.
+2. In order for the promises to be executed in a particular order, the operation can be executed inside of a for...of block that executed in specific order.
+
+
+1. Promise.all executes the promises it receives in parallel.
+2. In order for the promises to be executed in a particular order, the operation can be executed inside of a for...of block that executed in specific order.
+
+The Promise.all method can be used for transforming an array of promises into a single promise, that will be fulfilled once every promise in the array passed to it as a parameter is resolved. The last line of code await Promise.all(promiseArray) waits that every promise for saving a note is finished, meaning that the database has been initialized.
+
+The returned values of each promise in the array can still be accessed when using the Promise.all method. If we wait for the promises to be resolved with the await syntax const results = await `Promise.all(promiseArray)`, the operation will return an array that contains the resolved values for each promise in the promiseArray, and they appear in the same order as the promises in the array.
+
+`Promise.all` executes the promises it receives in parallel. If the promises need to be executed in a particular order, this will be problematic. In situations like this, the operations can be executed inside of a `for...of` block, that guarantees a specific execution order.
+
+beforeEach(async () => {
+  await Note.deleteMany({})
+
+  for (let note of helper.initialNotes) {
+    let noteObject = new Note(note)
+    await noteObject.save()
+  }
+})
+
+![Screen Shot 2021-11-23 at 10 28 06 am](https://user-images.githubusercontent.com/67087939/142950043-acd4f7d8-8a26-4550-9350-123c89540404.png)
+
+
