@@ -105,6 +105,19 @@ describe('no content test', () => {
     expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
   })
 }, 100000)
+// Test for insuffiecient data/data invalid with status code 400
+describe('Content missing response with 400 Bad Request', () => {
+  test('Fails with status 400 if data invalid', async () => {
+    const newNote = {
+      important: true,
+    }
+
+    await api.post('/api/notes').send(newNote).expect(400)
+
+    const notesAtEnd = await helper.notesInDb()
+    expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
+  })
+})
 // retrive one note
 describe('view specific note', () => {
   test('successfully viewed specific note', async () => {
@@ -123,7 +136,7 @@ describe('view specific note', () => {
     expect(resultNote.body).toEqual(processedNoteToView)
   })
 }, 100000)
-// test for removing individual note
+// test for removing individual blog
 describe('deleting individual note', () => {
   test('a note can be deleted', async () => {
     const notesAtStart = await helper.notesInDb()
