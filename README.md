@@ -194,9 +194,8 @@ Using `promise.all`
 1. Promise.all executes the promises it receives in parallel.
 2. In order for the promises to be executed in a particular order, the operation can be executed inside of a for...of block that executed in specific order.
 
-
-1. Promise.all executes the promises it receives in parallel.
-2. In order for the promises to be executed in a particular order, the operation can be executed inside of a for...of block that executed in specific order.
+3. Promise.all executes the promises it receives in parallel.
+4. In order for the promises to be executed in a particular order, the operation can be executed inside of a for...of block that executed in specific order.
 
 The Promise.all method can be used for transforming an array of promises into a single promise, that will be fulfilled once every promise in the array passed to it as a parameter is resolved. The last line of code await Promise.all(promiseArray) waits that every promise for saving a note is finished, meaning that the database has been initialized.
 
@@ -205,14 +204,24 @@ The returned values of each promise in the array can still be accessed when usin
 `Promise.all` executes the promises it receives in parallel. If the promises need to be executed in a particular order, this will be problematic. In situations like this, the operations can be executed inside of a `for...of` block, that guarantees a specific execution order.
 
 beforeEach(async () => {
-  await Note.deleteMany({})
+await Note.deleteMany({})
 
-  for (let note of helper.initialNotes) {
-    let noteObject = new Note(note)
-    await noteObject.save()
-  }
+for (let note of helper.initialNotes) {
+let noteObject = new Note(note)
+await noteObject.save()
+}
 })
 
 ![Screen Shot 2021-11-23 at 10 28 06 am](https://user-images.githubusercontent.com/67087939/142950043-acd4f7d8-8a26-4550-9350-123c89540404.png)
 
+# User administration
 
+- This is task using MongoDB document database.
+
+To create user password hash install :
+
+> `npm install bcrypt`
+
+Mongoose does not have a built-in validator for checking the uniqueness of a field. In order to have a unique username we install ready-made solutions from mongoose-unique-validator npm pakage.
+
+> `npm install mongoose-unique-validator`
