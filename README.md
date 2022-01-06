@@ -236,9 +236,11 @@ Create code for the function in `controllers/login.js`.
 
 The process for the new note is : -
 
-1. Create user
-2. Create token
-3. Create new note with token from step 2.
+1. Create user `controllers/users.js`
+2. Create token `controllers/login.js` using the user and password.
+3. Create new note with token from step 2. 'controllers/notes.js` using token and bearer scheme
+
+- Bearer scheme is necessary for server to offer multiple ways to authenticate. Attach credentials ..
 
 # The token can be faulty (like in our example), falsified, or expired. Let's extend our errorHandler middleware to take into account the different decoding errors. Using middleware to handle decoding errors.
 
@@ -257,3 +259,9 @@ Problems of Token-based authentication
 - const token = jwt.sign(userForToken, process.env.SECRET, {
   expiresIn: 30 \* 30,
   })`
+
+The client has to get new token once the token expire. We use middleware to handle the expired token error.
+
+Option two is to create a server side session. Saving the token infor in backend datebase and check for API request for access right.
+
+The downside for server side session is it increase the complexity and performance since the token validity needs to be checked for each API request from database which considered slower compare to checking validity from token itself.
