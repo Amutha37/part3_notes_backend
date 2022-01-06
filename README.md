@@ -239,3 +239,21 @@ The process for the new note is : -
 1. Create user
 2. Create token
 3. Create new note with token from step 2.
+
+# The token can be faulty (like in our example), falsified, or expired. Let's extend our errorHandler middleware to take into account the different decoding errors. Using middleware to handle decoding errors.
+
+(error.name === 'JsonWebTokenError') {
+return response.status(401).json({
+error: 'invalid token',
+})
+}
+
+If the application has multiple interfaces requiring identification, JWT's(jswebtoken) validation should be separated into its own middleware. Some existing library like express-jwt could also be used.
+
+Problems of Token-based authentication
+
+- Downside of token is it has blind trust to the token holder. It allow a user who access has been denied to still use the token. For this reason we can limit the validity period of the token.
+
+- const token = jwt.sign(userForToken, process.env.SECRET, {
+  expiresIn: 30 \* 30,
+  })`
