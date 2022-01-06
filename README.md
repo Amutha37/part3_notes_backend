@@ -225,3 +225,17 @@ To create user password hash install :
 Mongoose does not have a built-in validator for checking the uniqueness of a field. In order to have a unique username we install ready-made solutions from mongoose-unique-validator npm pakage.
 
 > `npm install mongoose-unique-validator`
+
+# Creating a new note with the user is who create it.
+
+# Implement the functionality for loggin in.
+
+> `npm instal jsonwebtoken`
+
+Create code for the function in `controllers/login.js`.
+
+The process for the new note is : -
+
+1. Create user
+2. Create token
+3. Create new note with token from step 2.

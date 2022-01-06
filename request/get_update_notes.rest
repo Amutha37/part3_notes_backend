@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/notes/6181ae0e198e6825c380632a
+content-type: application/json
+
+{
+    "content": "Case study",
+    "important": true
+}
