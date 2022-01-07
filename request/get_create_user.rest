@@ -3,8 +3,8 @@ content-type: application/json
 
     {
     "notes": [],
-    "username": "fullstackopen",
-    "name": "Amutha",
-    "password": "fullstackopen amutha"
+    "username": "webdev",
+    "name": "Kishen",
+    "password": "year7"
 }
 
