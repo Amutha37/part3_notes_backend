@@ -1,11 +1,11 @@
 POST  http://localhost:3001/api/notes
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndlYmRldiIsImlkIjoiNjFkNzgzYmI3ZjBhNDlhM2NmMGJiYjUwIiwiaWF0IjoxNjQxNTE1NTAxLCJleHAiOjE2NDE1Mjk5MDF9.NUgFgvg0COqi3ak1Heeo8stgMi60TMtHV9LQI85RX-4
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFtdXRoYSIsImlkIjoiNjFkY2RhMGQ5ZGUwNzc3MTY3MWZjM2QzIiwiaWF0IjoxNjQxODY5NjQzLCJleHAiOjE2NDE4ODQwNDN9._sZHaLWn7T_YJ910DoTFc8uwt38N45ZD2dJKpBAH7vg
 
 {
-    "content": "testing 12",
+    "content": "testing for new blog",
     "important": true,
-    "userId":"61d783bb7f0a49a3cf0bbb50"
+    "userId":"61dcda0d9de07771671fc3d3"
 }
 
 

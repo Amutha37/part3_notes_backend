@@ -7,11 +7,6 @@ const User = require('../models/user')
 
 //   response.json(users)
 // })
-usersRouter.get('/', async (request, response) => {
-  const users = await User.find({}).populate('notes', { content: 1, date: 1 })
-
-  response.json(users.map((u) => u.toJSON()))
-})
 
 usersRouter.post('/', async (request, response) => {
   const body = request.body
@@ -28,6 +23,18 @@ usersRouter.post('/', async (request, response) => {
   const savedUser = await user.save()
 
   response.json(savedUser)
+})
+
+usersRouter.get('/', async (request, response) => {
+  // const user = await User.findById(user.id)
+
+  const users = await User.find({}).populate('notes', {
+    content: 1,
+    important: 1,
+    date: 1,
+  })
+
+  response.json(users.map((u) => u.toJSON()))
 })
 
 module.exports = usersRouter
