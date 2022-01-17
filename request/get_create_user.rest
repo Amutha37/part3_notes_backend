@@ -2,9 +2,16 @@ POST  http://localhost:3001/api/users
 content-type: application/json
 
     {
+<<<<<<< HEAD
    "username": "Harrison",
     "name": "Karyn Robert",
     "password": "Harrisonpass",
         "notes": []
+=======
+    "notes": [],
+    "username": "webdev",
+    "name": "Kishen",
+    "password": "year7"
+>>>>>>> bf401b4156e07cac35bf4c4b128a734ccaea0aa2
 }
 

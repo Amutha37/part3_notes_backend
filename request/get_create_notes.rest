@@ -1,9 +1,19 @@
 POST  http://localhost:3001/api/notes
 Content-Type: application/json
+<<<<<<< HEAD
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhhcnJpc29uIiwiaWQiOiI2MWU1MTZiNjE4NjA2NjNkODE3OTMxZWUiLCJpYXQiOjE2NDI0MDM1MzcsImV4cCI6MTY0MjQwNDQzN30.oy1eqH5qQeb8j9rLynF7l_QVi_Jz9NMgjP1sle6N3Dg
 
 {
     "content": "Gungahlin Town Center",
     "important": true
+=======
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndlYmRldiIsImlkIjoiNjFkNzgzYmI3ZjBhNDlhM2NmMGJiYjUwIiwiaWF0IjoxNjQxNTE1NTAxLCJleHAiOjE2NDE1Mjk5MDF9.NUgFgvg0COqi3ak1Heeo8stgMi60TMtHV9LQI85RX-4
+
+{
+    "content": "testing 12",
+    "important": true,
+    "userId":"61d783bb7f0a49a3cf0bbb50"
+>>>>>>> bf401b4156e07cac35bf4c4b128a734ccaea0aa2
 }
+
 
