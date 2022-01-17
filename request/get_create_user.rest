@@ -2,9 +2,9 @@ POST  http://localhost:3001/api/users
 content-type: application/json
 
     {
-    "notes": [],
-    "username": "fullstackopen",
-    "name": "Amutha",
-    "password": "fullstackopen amutha"
+   "username": "Harrison",
+    "name": "Karyn Robert",
+    "password": "Harrisonpass",
+        "notes": []
 }
 
