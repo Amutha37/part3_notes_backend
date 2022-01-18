@@ -29,14 +29,14 @@ notesRouter.post('/', async (request, response) => {
   const user = await User.findById(decodedToken.id)
   // const user = await User.fi ndById(body.userId)
 
-  const note = new Note({
+  const addNote = new Note({
     content: body.content,
     important: body.important === undefined ? false : body.important,
     date: new Date(),
     user: user._id,
   })
 
-  const savedNote = await note.save()
+  const savedNote = await addNote.save()
   user.notes = user.notes.concat(savedNote._id)
   await user.save()
 
@@ -52,24 +52,52 @@ notesRouter.get('/:id', async (request, response) => {
   }
 })
 
-notesRouter.delete('/:id', async (request, response) => {
-  await Note.findByIdAndRemove(request.params.id)
-  response.status(204).end()
+notesRouter.delete('/:id', async (request, response, next) => {
+  // token authorization
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!request.params.id || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  // const user = await User.findById(request.param.id)
+  try {
+    const noteUser = await Note.findById(request.params.id)
+    console.log(noteUser.user, decodedToken.id)
+    if (noteUser.user.toString() === decodedToken.id.toString()) {
+      await Note.findByIdAndRemove(request.params.id)
+      response.status(204).end()
+    } else {
+      response.status(400).end()
+    }
+  } catch (error) {
+    next(error)
+  }
 })
 
-notesRouter.put('/:id', (request, response, next) => {
+notesRouter.put('/:id', async (request, response, next) => {
   const body = request.body
+  // token authorization
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const user = await User.findById(decodedToken.id)
 
   const note = {
     content: body.content,
     important: body.important,
+    user: user.id,
   }
-
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then((updatedNote) => {
-      response.json(updatedNote.toJSON())
+  try {
+    const result = await Note.findByIdAndUpdate(request.params.id, note, {
+      new: true,
     })
-    .catch((error) => next(error))
+
+    response.json(result.toJSON())
+  } catch (error) {
+    next(error)
+  }
 })
 
 module.exports = notesRouter
