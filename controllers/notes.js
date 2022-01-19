@@ -21,13 +21,13 @@ const getTokenFrom = (request) => {
 notesRouter.post('/', async (request, response) => {
   const body = request.body
   // token authorization
-  const token = getTokenFrom(request)
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
-  const user = await User.findById(decodedToken.id)
-  // const user = await User.fi ndById(body.userId)
+
+  const token = request.user
+  console.log(token)
+
+  // const tokenId = await User.findById(token)
+
+  const user = await User.findById(token)
 
   const addNote = new Note({
     content: body.content,
@@ -53,17 +53,12 @@ notesRouter.get('/:id', async (request, response) => {
 })
 
 notesRouter.delete('/:id', async (request, response, next) => {
-  // token authorization
-  const token = getTokenFrom(request)
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!request.params.id || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
-  // const user = await User.findById(request.param.id)
+  const user = request.user
+
   try {
-    const noteUser = await Note.findById(request.params.id)
-    console.log(noteUser.user, decodedToken.id)
-    if (noteUser.user.toString() === decodedToken.id.toString()) {
+    const note = await Note.findById(request.params.id)
+    console.log('note', note, 'user', user)
+    if (note.user.toString() === user.toString()) {
       await Note.findByIdAndRemove(request.params.id)
       response.status(204).end()
     } else {

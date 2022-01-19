@@ -1,4 +1,5 @@
 const logger = require('./logger')
+const jwt = require('jsonwebtoken')
 
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method)
@@ -33,8 +34,54 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
+const tokenExtractor = async (request, response, next) => {
+  const authorization = request.get('authorization')
+
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    request.token = authorization.substring(7)
+  } else {
+    request.token = null
+  }
+  try {
+    const decodedToken = await jwt.verify(request.token, process.env.SECRET)
+    if (!request.token || !decodedToken) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    } else {
+      request.decodedToken = decodedToken
+    }
+  } catch (error) {
+    request.decodedToken = null
+  }
+
+  next()
+}
+
+const userExtractor = async (request, response, next) => {
+  const authorization = request.get('authorization')
+
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    request.token = authorization.substring(7)
+  } else {
+    request.token = null
+  }
+  try {
+    const userToken = await jwt.verify(request.token, process.env.SECRET)
+    if (!request.token || !userToken) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    } else {
+      request.user = userToken.id
+    }
+  } catch (error) {
+    request.user = null
+  }
+
+  next()
+}
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
+  tokenExtractor,
+  userExtractor,
 }
