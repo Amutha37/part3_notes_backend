@@ -3,14 +3,16 @@ const User = require('../models/user')
 
 const initialNotes = [
   {
+    _id: '61e8d79d34091000e7e2658d',
     content: 'HTML is easy',
-    date: new Date(),
     important: false,
+    __v: 0,
   },
   {
+    _id: '61e8d79d34091000e7e2658e',
     content: 'Browser can execute only Javascript',
-    date: new Date(),
     important: true,
+    __v: 0,
   },
 ]
 

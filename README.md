@@ -236,6 +236,8 @@ Create code for the function in `controllers/login.js`.
 
 The process for the new note is : -
 
+STEPS
+
 1. Create user `controllers/users.js`
 2. Create token `controllers/login.js` using the user and password.
 3. Create new note with token from step 2. 'controllers/notes.js` using token and bearer scheme

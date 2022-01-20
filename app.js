@@ -10,17 +10,22 @@ const loginRouter = require('./controllers/login')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 // mongoDB atlas
+const mongoUrl = config.MONGODB_URI
 
-logger.info('connecting to', config.MONGODB_URI)
+logger.info('connecting to', mongoUrl)
 
-mongoose
-  .connect(config.MONGODB_URI)
-  .then(() => {
-    console.log('connected to MongoDB')
-  })
-  .catch((error) => {
-    console.log('error connecting to MongoDB:', error.message)
-  })
+mongoose.connect(mongoUrl)
+
+// logger.info('connecting to', config.MONGODB_URI)
+
+// mongoose
+//   .connect(config.MONGODB_URI)
+//   .then(() => {
+//     console.log('connected to MongoDB')
+//   })
+//   .catch((error) => {
+//     console.log('error connecting to MongoDB:', error.message)
+//   })
 //  jason-parser to access data to dd new notes in the request body in JSON format.
 app.use(cors())
 

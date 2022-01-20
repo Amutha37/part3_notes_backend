@@ -67,19 +67,11 @@ notesRouter.delete('/:id', async (request, response, next) => {
 
 notesRouter.put('/:id', async (request, response, next) => {
   const body = request.body
-  // token authorization
-  // const token = getTokenFrom(request)
-  // const decodedToken = jwt.verify(token, process.env.SECRET)
-  // if (!decodedToken.id) {
-  //   return response.status(401).json({ error: 'token missing or invalid' })
-  // }
   const user = request.user
-  // const userId = await User.findById(user)
-  // console.log(user, userId)
 
   try {
     const note = await Note.findById(request.params.id)
-    console.log('user', user, 'note', note)
+
     if (note.user.toString() === user.toString()) {
       const note = {
         content: body.content,

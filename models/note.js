@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
+require('mongoose-unique-validator')
 
 const noteSchema = new mongoose.Schema({
   content: {
     type: String,
     minlength: 5,
     required: true,
+    unique: true,
   },
   date: Date,
   important: Boolean,
