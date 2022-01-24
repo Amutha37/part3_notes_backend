@@ -32,11 +32,17 @@ notesRouter.post('/', async (request, response) => {
     user: user._id,
   })
 
+  if (!body.content) {
+    return response.status(400).json({
+      error: '`content` is required',
+    })
+  }
+
   const savedNote = await addNote.save()
   user.notes = user.notes.concat(savedNote._id)
   await user.save()
 
-  response.json(savedNote)
+  response.status(201).json(savedNote)
 })
 
 notesRouter.get('/:id', async (request, response) => {
@@ -58,7 +64,7 @@ notesRouter.delete('/:id', async (request, response, next) => {
       await Note.findByIdAndRemove(request.params.id)
       response.status(204).end()
     } else {
-      response.status(400).end()
+      response.status(403).json({ error: 'access denied' })
     }
   } catch (error) {
     next(error)

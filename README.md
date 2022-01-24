@@ -267,3 +267,9 @@ The client has to get new token once the token expire. We use middleware to hand
 Option two is to create a server side session. Saving the token infor in backend datebase and check for API request for access right.
 
 The downside for server side session is it increase the complexity and performance since the token validity needs to be checked for each API request from database which considered slower compare to checking validity from token itself.
+
+Error Message
+
+`Jest did not exit one second after the test run has completed.
+
+This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.`
