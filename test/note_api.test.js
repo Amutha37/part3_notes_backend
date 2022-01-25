@@ -2,17 +2,13 @@ const mongoose = require('mongoose')
 const helper = require('./test_helper')
 const supertest = require('supertest')
 const app = require('../app')
-// const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-
 const api = supertest(app)
 
 // user password schema
-// const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const Note = require('../models/note')
 
-// const { request } = require('express')
 jest.setTimeout(70000)
 // initialization
 let globalToken
@@ -25,8 +21,6 @@ beforeEach(async () => {
   const user = new User({ username: 'test', passwordHash })
   await user.save()
 
-  // const usersDb = await helper.usersInDb()
-  // console.log(usersDb)
   const response = await api
     .post('/api/login')
     .send({ username: 'test', password: 'test' })
@@ -39,16 +33,6 @@ beforeEach(async () => {
   await Note.insertMany(notes)
 })
 
-// get all user
-// describe('get all user', () => {
-//   test('get all user from DB', async () => {
-//     const response = await api
-//       .get('api/users')
-//       .expect(200)
-//       .expect('Content-Type', /application\/json/)
-//     expect(response.body.length).toEqual(1)
-//   })
-// })
 // test
 
 describe('content type', () => {
@@ -94,7 +78,7 @@ describe('add first new note.', () => {
       content: 'async/await simplifies making async calls',
       important: true,
     }
-
+    console.log('newBlog', newNote, 'globalToken', globalToken)
     await api
       .post('/api/notes')
       .set('Authorization', globalToken)
@@ -132,7 +116,6 @@ describe('no content test', () => {
 // retrive one note
 describe('view specific note', () => {
   test('successfully viewed specific note', async () => {
-    // const response = await api.get('/api/notes')
     const notesAtStart = await helper.notesInDb()
 
     const noteToView = notesAtStart[0]

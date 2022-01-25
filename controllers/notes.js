@@ -9,15 +9,6 @@ notesRouter.get('/', async (request, response) => {
   response.json(notes.map((note) => note.toJSON()))
 })
 
-// token authorization
-// const getTokenFrom = (request) => {
-//   const authorization = request.get('authorization')
-//   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-//     return authorization.substring(7)
-//   }
-//   return null
-// }
-
 notesRouter.post('/', async (request, response) => {
   const body = request.body
   // token authorization
