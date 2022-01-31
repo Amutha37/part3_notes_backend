@@ -58,7 +58,7 @@ describe('first notes', () => {
 
     expect(response.body[0].content).toBe('HTML is easy')
   })
-}, 200000)
+})
 
 describe('search for data', () => {
   test('a specific note is within the returned notes', async () => {
@@ -96,7 +96,6 @@ describe('add first new note.', () => {
 // note without content will not be saved
 describe('no content test', () => {
   test('Fails with status 400 without content note', async () => {
-    // const user = await User.findById(token)
     const newNote = {
       important: true,
     }

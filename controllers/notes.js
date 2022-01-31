@@ -14,8 +14,10 @@ notesRouter.post('/', async (request, response) => {
   // token authorization
 
   const token = request.user
+  console.log(token)
   const user = await User.findById(token)
 
+  console.log(user._id)
   const addNote = new Note({
     content: body.content,
     important: body.important === undefined ? false : body.important,
