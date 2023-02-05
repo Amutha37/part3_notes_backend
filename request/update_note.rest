@@ -1,0 +1,8 @@
+PUT http://localhost:3001/api/notes/61e774b256636ed6dff73e50
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNjZW5pcSIsImlkIjoiNjFlNjY0YjU0MmVjNzFiN2NlNjJjMzRmIiwiaWF0IjoxNjQyNTUzMjc3LCJleHAiOjE2NDI1Njc2Nzd9.L9b00HAWZkonkNRyQk2lNPXXsRbjIWfeS62McgxeIzY
+
+{
+     "content": "sceniq 2 amend ",
+       "important": true
+  }

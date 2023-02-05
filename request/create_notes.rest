@@ -1,0 +1,8 @@
+POST  http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNjZW5pcSIsImlkIjoiNjFlNjY0YjU0MmVjNzFiN2NlNjJjMzRmIiwiaWF0IjoxNjQyNTQ1Nzc1LCJleHAiOjE2NDI1NjAxNzV9.ZhHicmZ-NyKM76fx9VV5TYyvluhSFtKn8hScIDMYZdI
+
+{
+        "content": "testing sceniq 1",
+       "important": true
+}
